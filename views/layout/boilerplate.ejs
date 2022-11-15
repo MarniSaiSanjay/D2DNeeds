@@ -29,18 +29,21 @@
         href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/fontawesome.min.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
+    <link rel="shortcut icon" href="/stylesheets/icon.png" type="image/x-icon" sizes="16x16">
+    <!--Fav-icon-->
+
     <title>D2D</title>
 
 
-<style>
-    .footer{
+    <style>
+        .footer {
             background-color: #45898e;
             color: white;
         }
-</style>
+    </style>
 
 
-    
+
 
 </head>
 
@@ -65,7 +68,7 @@
             </div>
             <div class="container text-center">
                 <span class="footer_span">
-                        Made with &#10084; by Team 33
+                    Made with &#10084; by Team 33
                 </span>
             </div>
         </footer>
@@ -102,25 +105,25 @@
 
 
         <script>
-                // Example starter JavaScript for disabling form submissions if there are invalid fields
-                (function () {
-                    'use strict'
+            // Example starter JavaScript for disabling form submissions if there are invalid fields
+            (function () {
+                'use strict'
 
-                    // Fetch all the forms we want to apply custom Bootstrap validation styles to
-                    var forms = document.querySelectorAll('.needs-validation')     // this class must be the class of form/s
+                // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                var forms = document.querySelectorAll('.needs-validation')     // this class must be the class of form/s
 
-                    // Loop over them and prevent submission
-                    Array.prototype.slice.call(forms)    // we can make array usning 'from' instead of '.prototype.slice.call' i.e. 'Array.from(forms)'
-                        .forEach(function (form) {
-                            form.addEventListener('submit', function (event) {
-                                if (!form.checkValidity()) {
-                                    event.preventDefault()
-                                    event.stopPropagation()
-                                }
-                                form.classList.add('was-validated')
-                            }, false)
-                        })
-                })()
+                // Loop over them and prevent submission
+                Array.prototype.slice.call(forms)    // we can make array usning 'from' instead of '.prototype.slice.call' i.e. 'Array.from(forms)'
+                    .forEach(function (form) {
+                        form.addEventListener('submit', function (event) {
+                            if (!form.checkValidity()) {
+                                event.preventDefault()
+                                event.stopPropagation()
+                            }
+                            form.classList.add('was-validated')
+                        }, false)
+                    })
+            })()
         </script>
 
 </body>
