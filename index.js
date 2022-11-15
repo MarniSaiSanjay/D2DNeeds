@@ -167,6 +167,8 @@ app.delete('/review/:place_id/delete/:re_id', isLoggedIn, isReviewOwner, catchAs
 
 app.use('/auth', require('./routes/auth'));
 
+app.use('/', (req, res) => res.redirect('/about'));
+
 app.all('*', (req, res, next) => {
     res.render('pagenotfound');
 })
