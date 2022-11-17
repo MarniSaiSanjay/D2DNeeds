@@ -83,11 +83,14 @@ const storeSchema = JOI.object({
     location: JOI.string().required().escapeHTML(),
     description: JOI.string().required().escapeHTML(),
     category: JOI.string().required().escapeHTML(),
-    contact: JOI.number().integer().required()
+    contact: JOI.number().integer().required(),
+    reviews: JOI.array(),
+    items: JOI.array(),
+    cost: JOI.array()
 });
 
 module.exports.validateEvent = (req, res, next) => {
-    console.log(req.body);
+    // console.log(req.body);
     const { error } = storeSchema.validate(req.body);
     if (error) {
         const msg = error.details.map(el => el.message).join(',');
