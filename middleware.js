@@ -51,3 +51,50 @@ module.exports.isReviewOwner = async (req, res, next) => {
         return res.redirect(`/showAll`);
     }
 }
+
+/* ------------------------------JOI VALIDATION---------------------------------- */
+const BaseJoi = require('joi');
+const sanitizeHtml = require('sanitize-html');
+
+
+const extension = (joi) => ({ // an extension on Joi.string() to escape html in inputs
+    type: 'string',
+    base: joi.string(),
+    messages: {
+        'string.escapeHTML': '{{#label}} must not include HTML!'
+    },
+    rules: {
+        escapeHTML: {
+            validate(value, helpers) {
+                const clean = sanitizeHtml(value, {
+                    allowedTags: [],
+                    allowedAttributes: {},
+                });
+                if (clean !== value) return helpers.error('string.escapeHTML', { value }) // if cleaned and original value are not equal we return an error we defined above.
+                return clean;
+            }
+        }
+    }
+});
+const JOI = BaseJoi.extend(extension); // this is joi we use after applying extension
+
+const storeSchema = JOI.object({
+    name: JOI.string().required().escapeHTML(),
+    location: JOI.string().required().escapeHTML(),
+    description: JOI.string().required().escapeHTML(),
+    category: JOI.string().required().escapeHTML(),
+    contact: JOI.number().integer().required()
+});
+
+module.exports.validateEvent = (req, res, next) => {
+    console.log(req.body);
+    const { error } = storeSchema.validate(req.body);
+    if (error) {
+        const msg = error.details.map(el => el.message).join(',');
+        throw new ExpressError(msg, 400);
+    } else {
+        next();
+    }
+}
+
+

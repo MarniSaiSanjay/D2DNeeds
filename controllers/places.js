@@ -27,9 +27,6 @@ module.exports.addPlaceForm = (req, res) => {
 module.exports.addPlaceDB = async (req, res) => {
     const { name, description, location, category, contact, items, cost } = req.body;
 
-    // console.log(req.body);
-    // return res.redirect('/showall');
-
     if (contact.toString().length != 10) {
         req.flash('error', 'Enter valid phone number and try again');
         return res.redirect('/addplace');

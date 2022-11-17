@@ -63,15 +63,6 @@ const companySchema = new Schema({
 }, opt);
 
 
-// FOR MAPS DISPLAYING THE COMPANY DETIALS IN CLUSTER
-// companySchema.virtual('properties.popUpMarkup').get(function () {
-//   return `
-//     <h5> <a href = "/show/${this._id}">${this.name} </a> </h5>
-//     <h6>${this.location}</h6>
-//     <p>${this.description.substring(0, 34)}...</p>
-//     `
-// })
-
 // DELETING THE REVIEWS AFTER A COMPANY IS DELETED
 companySchema.post('findOneAndDelete', async (doc) => {
   if (doc) {

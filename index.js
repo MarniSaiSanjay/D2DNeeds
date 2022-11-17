@@ -95,7 +95,7 @@ app.use(async (req, res, next) => {
 })
 
 
-const { isLoggedIn, isAuthor, catchAsyncError, isReviewOwner} = require('./middleware');
+const { isLoggedIn, isAuthor, catchAsyncError, isReviewOwner, validateEvent} = require('./middleware');
 
 
 const Company = require('./models/company');
@@ -144,14 +144,14 @@ app.get('/showAll',  catchAsyncError(placeController.showAll));
 app.get('/addPlace', isLoggedIn, placeController.addPlaceForm);
 
 // ADD PLACE
-app.post('/addPlace', isLoggedIn, upload.array('images'),  catchAsyncError(placeController.addPlaceDB));
+app.post('/addPlace', isLoggedIn, upload.array('images'), validateEvent, catchAsyncError(placeController.addPlaceDB));
 
 
 // UPDATE FORM
 app.get('/place/:id', isLoggedIn, isAuthor,  catchAsyncError(placeController.updateForm));
 
 // UPDATE IN DB
-app.put('/place/:id', isLoggedIn, isAuthor, upload.array('images'), catchAsyncError(placeController.updateInDB));
+app.put('/place/:id', isLoggedIn, isAuthor, upload.array('images'), validateEvent, catchAsyncError(placeController.updateInDB));
 
 // DELETE PLACE
 app.delete('/place/:id', isLoggedIn, isAuthor,  catchAsyncError(placeController.deletePlace));
@@ -169,9 +169,18 @@ app.use('/auth', require('./routes/auth'));
 
 app.use('/', (req, res) => res.redirect('/about'));
 
+//404 ROUTE:
 app.all('*', (req, res, next) => {
-    res.render('pagenotfound');
+    next(new ExpressError('Page Not Found!', 404));
 })
+
+app.use((err, req, res, next) => {
+    if (!err.status) err.status = 500;
+    if (!err.message) err.message = 'Something went wrong!';
+    res.render('error', { err });
+    // res.send(err);
+})
+
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
