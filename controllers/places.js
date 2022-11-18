@@ -85,8 +85,9 @@ module.exports.updateForm = async (req, res) => {
 
 
 module.exports.updateInDB = async (req, res) => {
-    const { name, description, location, category, contact, items, cost } = req.body;
-    // console.log(req.body);
+    let { name, description, location, category, contact, items, cost } = req.body;
+    // console.log(items);
+    if (items == undefined) items = [], cost = [];
 
     if (name.trim() !== "" && description.trim() !== "" && location.trim() !== "" && contact >= 1000000000 && contact <= 9999999999) {
         const place = await Company.findByIdAndUpdate(req.params.id, { name: name.trim(), description: description.trim(), category, contact, items, cost }, { new: true });
